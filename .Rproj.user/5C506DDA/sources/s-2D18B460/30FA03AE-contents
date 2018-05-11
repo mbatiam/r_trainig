@@ -1,0 +1,42 @@
+df <- data.frame(a=rnorm(400, mean=10, sd=2),b=rbeta(400, shape1 = 5, shape2 = 10))
+mean(df$a)
+median(df$a) 
+sd(df$a) 
+mad(df$a) 
+IQR(df$a)
+
+#creating a function that I'll use to calculate the mean all the way to IQR and name it; summary_stats
+summary_stats <- function(x) { 
+  c(mean=mean(x), median=median(x), sd=sd(x), mad=mad(x), IQR=IQR(x))
+    }
+# using my function
+summary_stats(x=df$a) 
+summary_stats(x=df$a)
+
+# using purr package to calculate all the variables in the data set (df) using the function (summary_stats)
+purrr::map(.x=df , .f=summary_stats )
+
+# add a character variable in R
+df$c <- sample(LETTERS, 400, TRUE)
+df$d <- as.factor(sample(LETTERS, 400, TRUE))
+df
+
+# using purr package for summary
+purrr::map(.x=df , .f=summary_stats )
+
+summary_stats <- function(x) {
+  if (is.numeric(x)) {
+  c(mean = mean(x), median = median(x), sd = sd(x), mad = mad(x), IQR = IQR(x))
+}
+  else if (is.character(x)) {
+    paste("Wacha mchezo: Summary stats for a non numeric")
+} else {
+          try(c(mean = mean(x), median = median(x), sd = sd(x), mad = mad(x), IQR = IQR(x)),
+          outFile = "error/errors.txt"
+          )
+    } 
+}
+
+
+
+
